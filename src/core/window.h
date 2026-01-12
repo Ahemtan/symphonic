@@ -15,6 +15,7 @@ public:
   ~Window();
 
   bool shouldClose() const;
-  void udate();
+  void update();
+  void input();
   GLFWwindow *getGLFWwindow() const;
 };

@@ -46,6 +46,16 @@ Window::Window(int w, int h, const std::string &title)
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
+void Window::update() {
+  glfwSwapBuffers(window);
+  glfwPollEvents();
+}
+
+void Window::input() {
+  if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    glfwSetWindowShouldClose(window, true);
+}
+
 Window::~Window() {
   if (window)
     glfwDestroyWindow(window);
