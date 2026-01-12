@@ -1,26 +1,27 @@
-#include <GL/glew.h>
+#include "core/window.h"
 #include <GLFW/glfw3.h>
-#include <initializer_list>
 #include <iostream>
+#include <stdexcept>
 
 int main() {
-  if (!glfwInit()) {
-    std::cerr << "GLFW failed\n";
+
+  try {
+    Window window(800, 600, "Symphonic");
+    Window anotherWindow(400, 300, "Another Window");
+
+    while (!window.shouldClose() && !anotherWindow.shouldClose()) {
+
+      glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+      glfwSwapBuffers(window.getGLFWwindow());
+      glfwPollEvents();
+    }
+
+  } catch (const std::runtime_error &e) {
+    std::cerr << "Error: " << e.what() << std::endl;
     return -1;
   }
 
-  GLFWwindow *win = glfwCreateWindow(800, 600, "Symponic", nullptr, nullptr);
-  glfwMakeContextCurrent(win);
-
-  if (glewInit() != GLEW_OK) {
-    std::cerr << "GLEW failed\n";
-    return -1;
-  }
-
-  while (!glfwWindowShouldClose(win)) {
-    glClear(GL_COLOR_BUFFER_BIT);
-    glfwSwapBuffers(win);
-    glfwPollEvents();
-  }
   return 0;
 }
